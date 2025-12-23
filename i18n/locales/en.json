@@ -1,0 +1,64 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "logout": "Log Out"
+    },
+    "login": {
+        "title": "Rosie Login",
+        "registerTitle": "Rosie Register",
+        "email": "Email",
+        "password": "Password",
+        "loginButton": "Log In",
+        "registerButton": "Let's Start",
+        "switchToRegister": "New here? Register now!",
+        "switchToLogin": "Already have an account? Log in",
+        "madeWith": "Made with 💖 for Kawaii Lovers",
+        "fillAll": "Please fill in all fields."
+    },
+    "home": {
+        "title": "Virtual Pet",
+        "status": {
+            "happy": "Happy",
+            "hungry": "Hungry",
+            "bored": "Bored",
+            "tired": "Tired"
+        },
+        "messages": {
+            "happy": "Yay! I feel great! 💕",
+            "hungry": "Can you hear my tummy rumbling? 🍩",
+            "bored": "Uuuu... I'm so bored! 🎨",
+            "tired": "Shall we take a little nap? ☁️"
+        },
+        "actions": {
+            "feed": "Feed",
+            "play": "Play",
+            "rest": "Rest"
+        },
+        "subactions": {
+            "feedTime": "Meal Time",
+            "playTime": "Play Time",
+            "restTime": "Sleep Time"
+        },
+        "devControls": "Developer Controls"
+    },
+    "tabs": {
+        "home": "Home",
+        "characters": "Characters",
+        "settings": "Settings"
+    },
+    "settings": {
+        "title": "Settings",
+        "notifications": "Notifications",
+        "sounds": "App Sounds",
+        "language": "Language",
+        "turkish": "Turkish",
+        "english": "English",
+        "help": "Help & Support",
+        "about": "About"
+    },
+    "notifications": {
+        "happinessTitle": "Happiness!",
+        "happinessBody": "{{name}} is very happy right now! ✨"
+    }
+}

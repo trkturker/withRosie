@@ -1,0 +1,64 @@
+{
+    "common": {
+        "loading": "Yükleniyor...",
+        "error": "Hata",
+        "logout": "Çıkış Yap"
+    },
+    "login": {
+        "title": "Rosie Giriş",
+        "registerTitle": "Rosie Kayıt",
+        "email": "E-posta",
+        "password": "Şifre",
+        "loginButton": "Giriş Yap",
+        "registerButton": "Haydi Başla",
+        "switchToRegister": "Yeni misin? Hemen kayıt ol!",
+        "switchToLogin": "Zaten hesabın var mı? Giriş yap",
+        "madeWith": "Kawaii Severler için 💖 ile yapıldı",
+        "fillAll": "Lütfen tüm alanları doldurun."
+    },
+    "home": {
+        "title": "Sanal Bebek",
+        "status": {
+            "happy": "Mutlu",
+            "hungry": "Aç",
+            "bored": "Sıkılmış",
+            "tired": "Yorgun"
+        },
+        "messages": {
+            "happy": "Yaşasın! Harika hissediyorum! 💕",
+            "hungry": "Mide gurultularımı duyuyor musun? 🍩",
+            "bored": "Uuuu... Canım çok sıkılıyor! 🎨",
+            "tired": "Birazcık kestirmeye mi gitsek? ☁️"
+        },
+        "actions": {
+            "feed": "Besle",
+            "play": "Oyna",
+            "rest": "Dinlen"
+        },
+        "subactions": {
+            "feedTime": "Yemek Saati",
+            "playTime": "Oyun Vakti",
+            "restTime": "Uyku Vakti"
+        },
+        "devControls": "Geliştirici Kontrolleri"
+    },
+    "tabs": {
+        "home": "Anasayfa",
+        "characters": "Karakterler",
+        "settings": "Ayarlar"
+    },
+    "settings": {
+        "title": "Ayarlar",
+        "notifications": "Bildirimler",
+        "sounds": "Uygulama Sesleri",
+        "language": "Dil Seçeneği",
+        "turkish": "Türkçe",
+        "english": "İngilizce",
+        "help": "Yardım & Destek",
+        "about": "Hakkında"
+    },
+    "notifications": {
+        "happinessTitle": "Mutluluk!",
+        "happinessBody": "{{name}} şu an çok mutlu! ✨"
+    }
+}
