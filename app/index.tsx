@@ -1,11 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
+import { registerForPushNotificationsAsync, sendLocalNotification } from '../lib/notifications';
 import { router, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Assets mapping
 const moodImages: Record<string, any> = {
@@ -27,6 +29,19 @@ export default function CompanionApp() {
   const { user, loading: authLoading, logout } = useAuth();
   const [petData, setPetData] = useState<PetData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expoPushToken, setExpoPushToken] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      registerForPushNotificationsAsync().then(token => {
+        if (token) {
+          setExpoPushToken(token);
+          // Save token to Firestore
+          setDoc(doc(db, 'users', user.uid), { pushToken: token }, { merge: true });
+        }
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -66,6 +81,11 @@ export default function CompanionApp() {
         state: newState,
         lastInteraction: Date.now()
       }, { merge: true });
+
+      // Send a local notification for feedback
+      if (newState === 'happy') {
+        await sendLocalNotification('Mutluluk!', `${petData?.name || 'Rosie'} şu an çok mutlu! ✨`);
+      }
     } catch (error) {
       console.error("Error updating pet state:", error);
     }
