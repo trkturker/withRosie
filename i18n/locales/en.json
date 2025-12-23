@@ -5,8 +5,8 @@
         "logout": "Log Out"
     },
     "login": {
-        "title": "Rosie Login",
-        "registerTitle": "Rosie Register",
+        "title": "Login to See Rosie",
+        "registerTitle": "Register to See Rosie",
         "email": "Email",
         "password": "Password",
         "loginButton": "Log In",

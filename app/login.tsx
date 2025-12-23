@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 export default function LoginScreen() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [email, setEmail] = useState('tturk753@gmail.com');
     const [password, setPassword] = useState('123456');
     const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ export default function LoginScreen() {
         >
             <View className="flex-1 justify-center items-center px-8">
                 <View className="bg-white p-8 rounded-[40px] w-full shadow-2xl border-4 border-[#FFD1DC]">
-                    <Text className="text-4xl font-bold text-[#FF69B4] mb-8 text-center italic">
+                    <Text className={`${i18n.language === 'tr' ? 'text-2xl' : 'text-3xl'} font-bold text-[#FF69B4] mb-8 text-center italic`}>
                         {isRegistering ? t('login.registerTitle') : t('login.title')}
                     </Text>
 

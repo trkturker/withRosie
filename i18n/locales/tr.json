@@ -5,8 +5,8 @@
         "logout": "Çıkış Yap"
     },
     "login": {
-        "title": "Rosie Giriş",
-        "registerTitle": "Rosie Kayıt",
+        "title": "Rosie'yi görmek için Giriş Yap",
+        "registerTitle": "Rosie'yi görmek için Kayıt Ol",
         "email": "E-posta",
         "password": "Şifre",
         "loginButton": "Giriş Yap",

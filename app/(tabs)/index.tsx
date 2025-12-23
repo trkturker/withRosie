@@ -37,7 +37,11 @@ export default function HomeScreen() {
         if (user && notificationsEnabled) {
             registerForPushNotificationsAsync().then(token => {
                 if (token) {
-                    setDoc(doc(db, 'users', user.uid), { pushToken: token }, { merge: true });
+                    // Save token and email to user root document
+                    setDoc(doc(db, 'users', user.uid), {
+                        pushToken: token,
+                        email: user.email
+                    }, { merge: true });
                 }
             });
         }
@@ -55,7 +59,10 @@ export default function HomeScreen() {
                         state: 'happy',
                         lastInteraction: Date.now()
                     };
-                    setDoc(docRef, initialData);
+                    setDoc(docRef, {
+                        ...initialData,
+                        userEmail: user.email // Store contact email with pet status
+                    });
                     setPetData(initialData);
                 }
                 setLoading(false);
@@ -83,7 +90,8 @@ export default function HomeScreen() {
             await setDoc(docRef, {
                 ...petData,
                 state: newState,
-                lastInteraction: Date.now()
+                lastInteraction: Date.now(),
+                userEmail: user.email
             }, { merge: true });
 
             playSound();
@@ -114,7 +122,8 @@ export default function HomeScreen() {
             <ScrollView>
 
                 {/* Header */}
-                <View className="flex-row justify-between items-center mb-10">
+                <View className="flex-row justify-between items-center ">
+                    {/* <View className="flex-row justify-between items-center mb-10"> */}
                     <View>
                         <Text className="text-3xl font-bold text-[#FF69B4]">{petData.name} ✨</Text>
                         <View className="bg-white px-4 py-1 rounded-full mt-2 self-start shadow-sm flex-row items-center border border-[#FFE0E6]">
@@ -139,12 +148,12 @@ export default function HomeScreen() {
                         </TouchableOpacity>
                     </View>
                 </View>
-
+                1
 
                 {/* Character Visual */}
                 <View className="flex-1 justify-center items-center">
-                    <View className="relative">
-                        {/* <View className="absolute -inset-10 bg-[#FFD1DC] opacity-30 rounded-full blur-3xl" /> */}
+                    <View className="relative justify-center items-center">
+                        <View className="absolute  w-96 h-96 bg-[#FFD1DC] opacity-30 rounded-full blur-3xl" />
                         <Image
                             source={moodImages[petData.state] || moodImages.happy}
                             className="w-96 h-96"
@@ -152,7 +161,7 @@ export default function HomeScreen() {
                     </View>
 
                     {/* Status Message Bubble */}
-                    <View className="bg-white/80 p-4 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
+                    <View className="bg-white/80 p-4 mt-1 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
                         <Text className="text-[#FF69B4] text-xl font-bold text-center italic leading-relaxed">
                             {t(`home.messages.${petData.state}`)}
                         </Text>
