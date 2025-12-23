@@ -134,7 +134,7 @@ export default function HomeScreen() {
                 </View>
 
                 {/* Developer Controls */}
-                <View className="flex-1">
+                <View className="flex-1 ">
                     <Text className="text-black text-[10px] text-center mb-2 uppercase tracking-widest opacity-60">{t('home.devControls')}</Text>
                     <View className="flex-row justify-center space-x-6 opacity-30">
                         <TouchableOpacity onPress={() => updatePetState('hungry')} className="mx-2">
@@ -148,7 +148,7 @@ export default function HomeScreen() {
                         </TouchableOpacity>
                     </View>
                 </View>
-                1
+
 
                 {/* Character Visual */}
                 <View className="flex-1 justify-center items-center">
@@ -161,7 +161,7 @@ export default function HomeScreen() {
                     </View>
 
                     {/* Status Message Bubble */}
-                    <View className="bg-white/80 p-4 mt-1 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
+                    <View className="bg-white/80 p-4 mt-4 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
                         <Text className="text-[#FF69B4] text-xl font-bold text-center italic leading-relaxed">
                             {t(`home.messages.${petData.state}`)}
                         </Text>
