@@ -16,7 +16,7 @@ Rosie is beautifully designed virtual friend application built with **React Nati
 
 - **Dynamic friend States**: Rosie's mood changes over time (Happy, Hungry, Bored, Tired).
 - **Interactive Actions**: Feed, play, and let Rosie rest to keep her happy!
-- **Voice Lines & SFX**: Custom voice lines based on Rosie's mood and satisfying sound effects for interactions.
+- **Voice Lines & SFX**: Custom voice lines based on Rosie's mood and sound effects for interactions.
 - **Global Music Player**: Soothing background music that respects your settings and persists across screens.
 - **Multi-Language Support**: Fully localized in **Turkish** and **English**.
 - **Push Notifications**: Stay updated on Rosie's needs even when the app is closed.
