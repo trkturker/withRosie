@@ -55,7 +55,8 @@
         "turkish": "Turkish",
         "english": "English",
         "help": "Help & Support",
-        "about": "About"
+        "about": "About",
+        "notificationsDenied": "Notification permission denied. Please enable notifications in settings."
     },
     "notifications": {
         "happinessTitle": "Happiness!",

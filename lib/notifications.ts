@@ -35,21 +35,23 @@ export async function registerForPushNotificationsAsync() {
         }
         if (finalStatus !== 'granted') {
             console.log('Failed to get push token for push notification!');
-            return;
+            return { token: null, status: finalStatus };
         }
 
-        // Learn more about projectId:
-        // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
-        // NOTEs: projectid is usually in app.json or passed to getExpoPushTokenAsync
         const projectId = Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId;
 
-        token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
-        console.log(token);
+        try {
+            token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
+            console.log(token);
+        } catch (e) {
+            console.log('Error getting push token', e);
+        }
+
+        return { token, status: finalStatus };
     } else {
         console.log('Must use physical device for Push Notifications');
+        return { token: null, status: 'granted' }; // Simulating success for simulators for local only
     }
-
-    return token;
 }
 
 export async function sendLocalNotification(title: string, body: string) {

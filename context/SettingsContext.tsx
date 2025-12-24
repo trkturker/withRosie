@@ -40,6 +40,22 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }, []);
 
     const setNotificationsEnabled = async (value: boolean) => {
+        if (value) {
+            const { registerForPushNotificationsAsync } = await import('../lib/notifications');
+            const { status } = await registerForPushNotificationsAsync();
+
+            if (status !== 'granted') {
+                const { Alert } = await import('react-native');
+                Alert.alert(
+                    i18n.t('common.error'),
+                    i18n.t('settings.notificationsDenied')
+                );
+                setNotificationsEnabledState(false);
+                await AsyncStorage.setItem('notificationsEnabled', JSON.stringify(false));
+                return;
+            }
+        }
+
         setNotificationsEnabledState(value);
         await AsyncStorage.setItem('notificationsEnabled', JSON.stringify(value));
     };

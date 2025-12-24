@@ -35,7 +35,7 @@ export default function HomeScreen() {
 
     useEffect(() => {
         if (user && notificationsEnabled) {
-            registerForPushNotificationsAsync().then(token => {
+            registerForPushNotificationsAsync().then(({ token }) => {
                 if (token) {
                     // Save token and email to user root document
                     setDoc(doc(db, 'users', user.uid), {

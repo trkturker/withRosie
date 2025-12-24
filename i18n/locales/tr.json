@@ -55,7 +55,8 @@
         "turkish": "Türkçe",
         "english": "İngilizce",
         "help": "Yardım & Destek",
-        "about": "Hakkında"
+        "about": "Hakkında",
+        "notificationsDenied": "Bildirim izni reddedildi. Lütfen ayarlardan bildirimleri etkinleştirin."
     },
     "notifications": {
         "happinessTitle": "Mutluluk!",
