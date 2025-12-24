@@ -25,10 +25,10 @@
             "tired": "Tired"
         },
         "messages": {
-            "happy": "Yay! I feel great! 💕",
-            "hungry": "Can you hear my tummy rumbling? 🍩",
-            "bored": "Huh... I'm so bored! 🎨",
-            "tired": "Shall we take a little nap? ☁️"
+            "happy": "💕 Yay! I feel great! 💕",
+            "hungry": "🍩 Can you hear my tummy rumbling? 🍩",
+            "bored": "🎨 Huh... I'm so bored! 🎨",
+            "tired": "☁️ Shall we take a little nap? ☁️"
         },
         "actions": {
             "feed": "Feed",

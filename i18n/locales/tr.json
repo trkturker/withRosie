@@ -25,10 +25,10 @@
             "tired": "Yorgun"
         },
         "messages": {
-            "happy": "Yaşasın! Harika hissediyorum! 💕",
-            "hungry": "Mide gurultularımı duyuyor musun? 🍩",
-            "bored": "Uuuu... Canım çok sıkılıyor! 🎨",
-            "tired": "Birazcık kestirmeye mi gitsek? ☁️"
+            "happy": "💕 Yaşasın! Harika hissediyorum! 💕",
+            "hungry": "🍩 Mide gurultularımı duyuyor musun? 🍩",
+            "bored": "🎨 Off... Canım çok sıkılıyor! 🎨",
+            "tired": "☁️ Birazcık kestirmeye mi gitsek? ☁️"
         },
         "actions": {
             "feed": "Besle",
