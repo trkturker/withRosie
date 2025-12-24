@@ -6,9 +6,10 @@ Rosie is beautifully designed virtual pet application built with **React Native*
 
 <div align="center">
   <img src="assets/screenshots/home.jpeg" width="250" alt="Home Screen" />
-  <img src="assets/screenshots/characters.jpeg" width="250" alt="Characters Screen" />
-  <img src="assets/screenshots/settings.jpeg" width="250" alt="Settings Screen" />
   <img src="assets/screenshots/notifications.jpeg" width="250" alt="Notifications Screen" />
+  <br />
+  <img src="assets/screenshots/settings.jpeg" width="250" alt="Settings Screen" />
+  <img src="assets/screenshots/characters.jpeg" width="250" alt="Characters Screen" />
 </div>
 
 ## ✨ Features
