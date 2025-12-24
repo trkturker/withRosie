@@ -10,6 +10,8 @@ import { registerForPushNotificationsAsync, sendLocalNotification, scheduleDelay
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from 'expo-router';
+import { DeveloperMenu } from '../../components/DeveloperMenu';
+import { ActionButton } from '../../components/ActionButton';
 
 const moodImages: Record<string, any> = {
     happy: require('../../assets/moods/charBase.png'),
@@ -39,6 +41,7 @@ export default function HomeScreen() {
     const { t } = useTranslation();
     const [petData, setPetData] = useState<PetData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [showDevMenu, setShowDevMenu] = useState(false);
     const voiceRef = useRef<Audio.Sound | null>(null);
 
     // Initial notification setup
@@ -126,7 +129,6 @@ export default function HomeScreen() {
                 require('../../assets/sounds/pop.mp3')
             );
             await sound.playAsync();
-            // Automatically unload short sound after completion
             sound.setOnPlaybackStatusUpdate((status) => {
                 if (status.isLoaded && status.didJustFinish) {
                     sound.unloadAsync();
@@ -194,8 +196,9 @@ export default function HomeScreen() {
 
     return (
         <SafeAreaView className="flex-1 px-6 py-8 bg-[#FFF5F7] font-fredoka">
-            <ScrollView>
-                <View className="flex-row justify-between items-center ">
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {/* Header */}
+                <View className="flex-row justify-between items-center mb-6">
                     <View>
                         <Text className="text-3xl font-fredoka-bold text-[#FF69B4]">{petData.name} ✨</Text>
                         <View className="bg-white px-4 py-1 rounded-full mt-2 self-start shadow-sm flex-row items-center border border-[#FFE0E6]">
@@ -203,39 +206,36 @@ export default function HomeScreen() {
                             <Text className="text-[#FF85A1] font-fredoka-medium capitalize">{t(`home.status.${petData.state}`)}</Text>
                         </View>
                     </View>
+
+                    {/* Dev Menu Toggle */}
+                    <TouchableOpacity
+                        onPress={() => setShowDevMenu(true)}
+                        className="w-12 h-12 bg-white rounded-2xl items-center justify-center shadow-sm border border-[#FFE0E6]"
+                    >
+                        <Ionicons name="menu-outline" size={28} color="#FF69B4" />
+                    </TouchableOpacity>
                 </View>
 
-                <View className="flex-1 ">
-                    <Text className="text-black text-[10px] text-center mb-2 uppercase tracking-widest opacity-60 font-fredoka-bold">{t('home.devControls')}</Text>
-                    <View className="flex-row justify-center space-x-6 opacity-30">
-                        <TouchableOpacity onPress={() => updatePetState('hungry')} className="mx-2">
-                            <Text className="text-black text-xs underline font-fredoka">Acıkmış (Hungry)</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => updatePetState('bored')} className="mx-2">
-                            <Text className="text-black text-xs underline font-fredoka">Sıkılmış (Bored)</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => updatePetState('tired')} className="mx-2">
-                            <Text className="text-black text-xs underline font-fredoka">Yorgun (Tired)</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                <View className="flex-1 justify-center items-center">
+                {/* Character Visual */}
+                <View className="items-center my-4">
                     <View className="relative justify-center items-center">
-                        <View className="absolute  w-96 h-96 bg-[#FFD1DC] opacity-30 rounded-full blur-3xl" />
+                        <View className="absolute w-96 h-96 bg-[#FFD1DC] opacity-30 rounded-full blur-3xl" />
                         <Image
                             source={moodImages[petData.state] || moodImages.happy}
                             className="w-96 h-96"
                         />
                     </View>
-                    <View className="bg-white/80 p-4 mt-4 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
+
+                    {/* Status Message Bubble */}
+                    <View className="bg-white/80 p-5 mt-6 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
                         <Text className="text-[#FF69B4] text-xl font-fredoka-bold text-center leading-relaxed">
                             {t(`home.messages.${petData.state}`)}
                         </Text>
                     </View>
                 </View>
 
-                <View className="flex-row justify-between mt-6 ">
+                {/* Interaction Actions */}
+                <View className="flex-row justify-between mt-8 mb-20">
                     <ActionButton
                         label={t('home.actions.feed')}
                         icon="pizza"
@@ -262,27 +262,13 @@ export default function HomeScreen() {
                     />
                 </View>
             </ScrollView>
+
+            <DeveloperMenu
+                visible={showDevMenu}
+                onClose={() => setShowDevMenu(false)}
+                currentState={petData.state}
+                onStateSelect={updatePetState}
+            />
         </SafeAreaView >
     );
 }
-
-const ActionButton = ({ label, icon, color, onPress, isActive, subLabel }: any) => (
-    <View className="items-center flex-1">
-        <TouchableOpacity
-            onPress={onPress}
-            style={{
-                backgroundColor: color,
-                shadowColor: color,
-                shadowOffset: { width: 0, height: 8 },
-                shadowOpacity: 0.4,
-                shadowRadius: 12,
-                elevation: 10
-            }}
-            className={`w-[82px] h-[82px] rounded-[30px] justify-center items-center border-b-4 border-black/10 transition-transform active:scale-90 ${isActive ? 'scale-110 border-4 border-white shadow-2xl' : 'border-4 border-white shadow-3xl'}`}
-        >
-            <Ionicons name={icon} size={34} color="white" />
-        </TouchableOpacity>
-        <Text className="mt-3 font-fredoka-bold text-[#FF69B4] text-[15px]">{label}</Text>
-        <Text className="text-[#FFB6C1] text-[11px] font-fredoka-medium tracking-tight">{subLabel}</Text>
-    </View>
-);

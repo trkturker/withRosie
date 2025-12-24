@@ -65,5 +65,10 @@
         "missYou": "Your friend missed you 🥺",
         "needFood": "Needs to be fed 🍎",
         "wantPlay": "Wants to play together 🎮"
+    },
+    "devMenu": {
+        "title": "Mood Test Menu",
+        "description": "You can change Rosie's mood instantly for testing purposes. ✨",
+        "close": "Close"
     }
 }
