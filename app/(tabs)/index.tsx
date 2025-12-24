@@ -44,7 +44,7 @@ export default function HomeScreen() {
     const [showDevMenu, setShowDevMenu] = useState(false);
     const voiceRef = useRef<Audio.Sound | null>(null);
 
-    // Initial notification setup
+
     useEffect(() => {
         if (user && notificationsEnabled) {
             registerForPushNotificationsAsync().then(({ token }) => {
@@ -58,7 +58,7 @@ export default function HomeScreen() {
         }
     }, [user, notificationsEnabled]);
 
-    // Pet Data snapshot
+
     useEffect(() => {
         if (user) {
             const docRef = doc(db, 'users', user.uid, 'pet', 'status');
@@ -197,7 +197,7 @@ export default function HomeScreen() {
     return (
         <SafeAreaView className="flex-1 px-6 py-8 bg-[#FFF5F7]">
             <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Header */}
+
                 <View className="flex-row justify-between items-center mb-6">
                     <View>
                         <Text className="text-3xl font-balsamiq-bold text-[#FF69B4]">{petData.name} ✨</Text>
@@ -207,7 +207,7 @@ export default function HomeScreen() {
                         </View>
                     </View>
 
-                    {/* Dev Menu Toggle */}
+
                     <TouchableOpacity
                         onPress={() => setShowDevMenu(true)}
                         className="w-12 h-12 bg-white rounded-2xl items-center justify-center shadow-sm border border-[#FFE0E6]"
@@ -216,7 +216,7 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                 </View>
 
-                {/* Character Visual */}
+
                 <View className="items-center my-4">
                     <View className="relative justify-center items-center">
                         <View className="absolute w-96 h-96 bg-[#FFD1DC] opacity-30 rounded-full blur-3xl" />
@@ -226,7 +226,7 @@ export default function HomeScreen() {
                         />
                     </View>
 
-                    {/* Status Message Bubble */}
+
                     <View className="bg-white/80 p-5 mt-6 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
                         <Text className="text-[#FF69B4] text-xl font-balsamiq-bold text-center leading-relaxed">
                             {t(`home.messages.${petData.state}`)}
@@ -234,13 +234,13 @@ export default function HomeScreen() {
                     </View>
                 </View>
 
-                {/* Interaction Actions */}
+
                 <View className="flex-row justify-between mt-8 mb-20">
                     <ActionButton
                         label={t('home.actions.feed')}
                         icon="pizza"
                         color="#FF9AA2"
-                        onPress={() => updatePetState('happy')}
+                        onPress={() => petData.state === 'hungry' && updatePetState('happy')}
                         isActive={petData.state === 'hungry'}
                         subLabel={t('home.subactions.feedTime')}
                     />
@@ -248,7 +248,7 @@ export default function HomeScreen() {
                         label={t('home.actions.play')}
                         icon="heart"
                         color="#B5EAD7"
-                        onPress={() => updatePetState('happy')}
+                        onPress={() => petData.state === 'bored' && updatePetState('happy')}
                         isActive={petData.state === 'bored'}
                         subLabel={t('home.subactions.playTime')}
                     />
@@ -256,7 +256,7 @@ export default function HomeScreen() {
                         label={t('home.actions.rest')}
                         icon="bed"
                         color="#C7CEEA"
-                        onPress={() => updatePetState('happy')}
+                        onPress={() => petData.state === 'tired' && updatePetState('happy')}
                         isActive={petData.state === 'tired'}
                         subLabel={t('home.subactions.restTime')}
                     />

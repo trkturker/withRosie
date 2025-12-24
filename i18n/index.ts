@@ -14,7 +14,7 @@ const initI18n = async () => {
     let savedLanguage = await AsyncStorage.getItem('user-language');
 
     if (!savedLanguage) {
-        savedLanguage = 'en'; // Default to English
+        savedLanguage = 'en';
     }
 
     i18n

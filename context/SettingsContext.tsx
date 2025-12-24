@@ -22,7 +22,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [language, setLanguageState] = useState(i18n.language || 'en');
 
     useEffect(() => {
-        // Load saved settings
+
         const loadSettings = async () => {
             try {
                 const savedNotif = await AsyncStorage.getItem('notificationsEnabled');
@@ -68,9 +68,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const setSoundsEnabled = async (value: boolean) => {
         setSoundsEnabledState(value);
         await AsyncStorage.setItem('soundsEnabled', JSON.stringify(value));
-        // If sounds are turned off, music should also be turned off implicitly by the UI logic or stay as is?
-        // User said: "app sounds" closes everything. 
-        // We'll handle the logic of actual playing in the components.
+
     };
 
     const setMusicEnabled = async (value: boolean) => {

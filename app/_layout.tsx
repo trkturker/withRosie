@@ -15,7 +15,7 @@ import {
 import { useEffect, useRef } from 'react';
 import { Audio } from 'expo-av';
 
-// Keep the splash screen visible while we fetch resources
+
 SplashScreen.preventAutoHideAsync();
 
 function GlobalMusicPlayer() {
@@ -25,7 +25,7 @@ function GlobalMusicPlayer() {
     const backgroundMusicRef = useRef<Audio.Sound | null>(null);
     const isInitializingRef = useRef(false);
 
-    // Sound system initialization and cleanup
+
     useEffect(() => {
         return () => {
             if (backgroundMusicRef.current) {
@@ -35,10 +35,10 @@ function GlobalMusicPlayer() {
         };
     }, []);
 
-    // Music playback management
+
     useEffect(() => {
         const manageBackgroundMusic = async () => {
-            // Music should only play if user is logged in, not on login screen, and settings allow it
+
             const isLoginScreen = (segments as string[])[0] === 'login';
             const shouldPlayMusic = !!user && musicEnabled && soundsEnabled && !isLoginScreen;
 
@@ -52,8 +52,7 @@ function GlobalMusicPlayer() {
                         );
                         backgroundMusicRef.current = sound;
 
-                        // Re-check if we should still be playing before starting
-                        // (In case the user logged out or changed screen during load)
+
                         const currentIsLogin = (segments as string[])[0] === 'login';
                         const stillShouldPlay = !!user && musicEnabled && soundsEnabled && !currentIsLogin;
 
