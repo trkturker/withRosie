@@ -29,7 +29,7 @@ export default function TabLayout() {
                     elevation: 12,
                 },
                 tabBarLabelStyle: {
-                    fontWeight: '700',
+                    fontFamily: 'Fredoka_700Bold',
                     fontSize: 11,
                     marginTop: 2,
                 },

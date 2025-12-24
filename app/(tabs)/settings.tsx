@@ -32,7 +32,7 @@ export default function SettingsScreen() {
     return (
         <SafeAreaView className="flex-1 bg-[#FFF5F7]">
             <ScrollView contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 32, paddingBottom: 120 }}>
-                <Text className="text-3xl font-bold text-[#FF69B4] mb-8">{t('settings.title')}</Text>
+                <Text className="text-3xl font-fredoka-bold text-[#FF69B4] mb-8">{t('settings.title')}</Text>
 
                 <View className="bg-white rounded-[32px] p-6 shadow-sm border border-[#FFE0E6] mb-6">
                     <SettingItem
@@ -50,7 +50,7 @@ export default function SettingsScreen() {
                     />
                 </View>
 
-                <Text className="text-[#FF85A1] font-bold mb-4 ml-2 uppercase tracking-widest text-xs">
+                <Text className="text-[#FF85A1] font-fredoka-bold mb-4 ml-2 uppercase tracking-widest text-xs">
                     {t('settings.language')}
                 </Text>
                 <View className="bg-white rounded-[32px] p-2 shadow-sm border border-[#FFE0E6] flex-row mb-8">
@@ -71,10 +71,10 @@ export default function SettingsScreen() {
                     className="bg-white p-5 rounded-[24px] shadow-sm border border-[#FFE0E6] flex-row items-center justify-center space-x-2"
                 >
                     <Ionicons name="log-out-outline" size={24} color="#FF69B4" />
-                    <Text className="text-[#FF69B4] font-bold text-lg">{t('common.logout')}</Text>
+                    <Text className="text-[#FF69B4] font-fredoka-bold text-lg">{t('common.logout')}</Text>
                 </TouchableOpacity>
 
-                <Text className="text-center text-[#FFB6C1] mt-8 text-xs font-medium">
+                <Text className="text-center text-[#FFB6C1] mt-8 text-xs font-fredoka-medium">
                     Rosie v1.0.0
                 </Text>
             </ScrollView>
@@ -88,7 +88,7 @@ const SettingItem = ({ icon, label, value, onToggle }: any) => (
             <View className="bg-[#FFF0F3] p-2 rounded-xl">
                 <Ionicons name={icon} size={22} color="#FF69B4" />
             </View>
-            <Text className="text-[#FF819E] font-bold text-base">{label}</Text>
+            <Text className="text-[#FF819E] font-fredoka-bold text-base">{label}</Text>
         </View>
         <Switch
             value={value}
@@ -104,6 +104,6 @@ const LanguageButton = ({ label, active, onPress }: any) => (
         onPress={onPress}
         className={`flex-1 p-4 rounded-[24px] items-center ${active ? 'bg-[#FF69B4]' : 'bg-transparent'}`}
     >
-        <Text className={`font-bold ${active ? 'text-white' : 'text-[#FF85A1]'}`}>{label}</Text>
+        <Text className={`font-fredoka-bold ${active ? 'text-white' : 'text-[#FF85A1]'}`}>{label}</Text>
     </TouchableOpacity>
 );

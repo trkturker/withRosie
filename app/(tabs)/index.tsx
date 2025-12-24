@@ -118,17 +118,17 @@ export default function HomeScreen() {
     if (!user || !petData) return null;
 
     return (
-        <SafeAreaView className="flex-1 px-6 py-8 bg-[#FFF5F7]">
+        <SafeAreaView className="flex-1 px-6 py-8 bg-[#FFF5F7] font-fredoka">
             <ScrollView>
 
                 {/* Header */}
                 <View className="flex-row justify-between items-center ">
                     {/* <View className="flex-row justify-between items-center mb-10"> */}
                     <View>
-                        <Text className="text-3xl font-bold text-[#FF69B4]">{petData.name} ✨</Text>
+                        <Text className="text-3xl font-fredoka-bold text-[#FF69B4]">{petData.name} ✨</Text>
                         <View className="bg-white px-4 py-1 rounded-full mt-2 self-start shadow-sm flex-row items-center border border-[#FFE0E6]">
                             <View className={`w-2 h-2 rounded-full mr-2 ${petData.state === 'happy' ? 'bg-green-400' : 'bg-pink-400 animate-pulse'}`} />
-                            <Text className="text-[#FF85A1] font-medium capitalize">{t(`home.status.${petData.state}`)}</Text>
+                            <Text className="text-[#FF85A1] font-fredoka-medium capitalize">{t(`home.status.${petData.state}`)}</Text>
                         </View>
                     </View>
                 </View>
@@ -162,7 +162,7 @@ export default function HomeScreen() {
 
                     {/* Status Message Bubble */}
                     <View className="bg-white/80 p-4 mt-4 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
-                        <Text className="text-[#FF69B4] text-xl font-bold text-center italic leading-relaxed">
+                        <Text className="text-[#FF69B4] text-xl font-fredoka-bold text-center italic leading-relaxed">
                             {t(`home.messages.${petData.state}`)}
                         </Text>
                     </View>
@@ -222,7 +222,7 @@ const ActionButton = ({ label, icon, color, onPress, isActive, subLabel }: any) 
         >
             <Ionicons name={icon} size={34} color="white" />
         </TouchableOpacity>
-        <Text className="mt-3 font-bold text-[#FF69B4] text-[15px]">{label}</Text>
-        <Text className="text-[#FFB6C1] text-[11px] font-medium tracking-tight">{subLabel}</Text>
+        <Text className="mt-3 font-fredoka-bold text-[#FF69B4] text-[15px]">{label}</Text>
+        <Text className="text-[#FFB6C1] text-[11px] font-fredoka-medium tracking-tight">{subLabel}</Text>
     </View>
 );
