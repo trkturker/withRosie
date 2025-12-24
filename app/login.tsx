@@ -85,7 +85,7 @@ export default function LoginScreen() {
                         <View className="mt-4">
                             <Text className="text-[#FF85A1] font-balsamiq-bold mb-2 ml-2">{t('login.password')}</Text>
                             <TextInput
-                                placeholder="••••••••"
+                                placeholder="Enter your password here..."
                                 secureTextEntry
                                 className="bg-[#FFF0F3] p-4 rounded-3xl border-2 border-[#FFE0E6] text-gray-800 font-balsamiq"
                                 value={password}
