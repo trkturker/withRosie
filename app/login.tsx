@@ -41,7 +41,7 @@ export default function LoginScreen() {
         >
             <View className="flex-1 justify-center items-center px-8">
                 <View className="bg-white p-8 rounded-[40px] w-full shadow-2xl border-4 border-[#FFD1DC]">
-                    <Text className={`${i18n.language === 'tr' ? 'text-2xl' : 'text-3xl'} font-fredoka-bold text-[#FF69B4] mb-8 text-center italic`}>
+                    <Text className={`${i18n.language === 'tr' ? 'text-2xl' : 'text-3xl'} font-fredoka-bold text-[#FF69B4] mb-8 text-center`}>
                         {isRegistering ? t('login.registerTitle') : t('login.title')}
                     </Text>
 

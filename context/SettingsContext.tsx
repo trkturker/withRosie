@@ -5,9 +5,11 @@ import i18n from '../i18n';
 interface SettingsContextType {
     notificationsEnabled: boolean;
     soundsEnabled: boolean;
+    musicEnabled: boolean;
     language: string;
     setNotificationsEnabled: (value: boolean) => void;
     setSoundsEnabled: (value: boolean) => void;
+    setMusicEnabled: (value: boolean) => void;
     setLanguage: (value: string) => void;
 }
 
@@ -16,6 +18,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [notificationsEnabled, setNotificationsEnabledState] = useState(true);
     const [soundsEnabled, setSoundsEnabledState] = useState(true);
+    const [musicEnabled, setMusicEnabledState] = useState(true);
     const [language, setLanguageState] = useState(i18n.language || 'tr');
 
     useEffect(() => {
@@ -24,10 +27,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             try {
                 const savedNotif = await AsyncStorage.getItem('notificationsEnabled');
                 const savedSounds = await AsyncStorage.getItem('soundsEnabled');
+                const savedMusic = await AsyncStorage.getItem('musicEnabled');
                 const savedLang = await AsyncStorage.getItem('user-language');
 
                 if (savedNotif !== null) setNotificationsEnabledState(JSON.parse(savedNotif));
                 if (savedSounds !== null) setSoundsEnabledState(JSON.parse(savedSounds));
+                if (savedMusic !== null) setMusicEnabledState(JSON.parse(savedMusic));
                 if (savedLang !== null) {
                     setLanguageState(savedLang);
                     i18n.changeLanguage(savedLang);
@@ -63,6 +68,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const setSoundsEnabled = async (value: boolean) => {
         setSoundsEnabledState(value);
         await AsyncStorage.setItem('soundsEnabled', JSON.stringify(value));
+        // If sounds are turned off, music should also be turned off implicitly by the UI logic or stay as is?
+        // User said: "app sounds" closes everything. 
+        // We'll handle the logic of actual playing in the components.
+    };
+
+    const setMusicEnabled = async (value: boolean) => {
+        setMusicEnabledState(value);
+        await AsyncStorage.setItem('musicEnabled', JSON.stringify(value));
     };
 
     const setLanguage = async (value: string) => {
@@ -76,9 +89,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             value={{
                 notificationsEnabled,
                 soundsEnabled,
+                musicEnabled,
                 language,
                 setNotificationsEnabled,
                 setSoundsEnabled,
+                setMusicEnabled,
                 setLanguage,
             }}
         >

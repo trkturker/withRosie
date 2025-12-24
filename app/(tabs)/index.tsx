@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
@@ -9,12 +9,20 @@ import { Audio } from 'expo-av';
 import { registerForPushNotificationsAsync, sendLocalNotification, scheduleDelayedNotification, cancelAllNotifications } from '../../lib/notifications';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from 'expo-router';
 
 const moodImages: Record<string, any> = {
     happy: require('../../assets/moods/charBase.png'),
     bored: require('../../assets/moods/charBored.png'),
     hungry: require('../../assets/moods/charHungry.png'),
     tired: require('../../assets/moods/charTired.png'),
+};
+
+const voiceLines: Record<string, any> = {
+    happy: require('../../assets/voicelines/happy.mp3'),
+    bored: require('../../assets/voicelines/bored.mp3'),
+    hungry: require('../../assets/voicelines/hungry.mp3'),
+    tired: require('../../assets/voicelines/tired.mp3'),
 };
 
 type PetState = 'happy' | 'bored' | 'hungry' | 'tired';
@@ -27,16 +35,17 @@ interface PetData {
 
 export default function HomeScreen() {
     const { user } = useAuth();
-    const { notificationsEnabled, soundsEnabled } = useSettings();
+    const { notificationsEnabled, soundsEnabled, musicEnabled } = useSettings();
     const { t } = useTranslation();
     const [petData, setPetData] = useState<PetData | null>(null);
     const [loading, setLoading] = useState(true);
+    const voiceRef = useRef<Audio.Sound | null>(null);
 
+    // Initial notification setup
     useEffect(() => {
         if (user && notificationsEnabled) {
             registerForPushNotificationsAsync().then(({ token }) => {
                 if (token) {
-                    // Save token and email to user root document
                     setDoc(doc(db, 'users', user.uid), {
                         pushToken: token,
                         email: user.email
@@ -46,6 +55,7 @@ export default function HomeScreen() {
         }
     }, [user, notificationsEnabled]);
 
+    // Pet Data snapshot
     useEffect(() => {
         if (user) {
             const docRef = doc(db, 'users', user.uid, 'pet', 'status');
@@ -54,7 +64,6 @@ export default function HomeScreen() {
                     const data = docSnap.data() as PetData;
                     setPetData(data);
 
-                    // Logic for automatic state transition after 30 minutes of being happy
                     if (data.state === 'happy') {
                         const timePassed = Date.now() - data.lastInteraction;
                         const THIRTY_MINUTES = 30 * 60 * 1000;
@@ -67,12 +76,12 @@ export default function HomeScreen() {
                 } else {
                     const initialData: PetData = {
                         name: 'Rosie',
-                        state: 'happy',
+                        state: 'bored',
                         lastInteraction: Date.now()
                     };
                     setDoc(docRef, {
                         ...initialData,
-                        userEmail: user.email // Store contact email with pet status
+                        userEmail: user.email
                     });
                     setPetData(initialData);
                 }
@@ -82,13 +91,47 @@ export default function HomeScreen() {
         }
     }, [user]);
 
+    const playVoiceLine = async (state: PetState) => {
+        if (!soundsEnabled || !voiceLines[state]) return;
+        try {
+            if (voiceRef.current) {
+                await voiceRef.current.unloadAsync();
+            }
+            const { sound } = await Audio.Sound.createAsync(voiceLines[state]);
+            voiceRef.current = sound;
+            await voiceRef.current.playAsync();
+        } catch (e) {
+            console.log('Voice line play error', e);
+        }
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            if (petData?.state) {
+                playVoiceLine(petData.state);
+            }
+
+            return () => {
+                if (voiceRef.current) {
+                    voiceRef.current.unloadAsync();
+                }
+            };
+        }, [petData?.state, soundsEnabled])
+    );
+
     const playSound = async () => {
         if (!soundsEnabled) return;
         try {
             const { sound } = await Audio.Sound.createAsync(
-                require('../../assets/sounds/pop.mp3') // Assuming this exists or will be added
+                require('../../assets/sounds/pop.mp3')
             );
             await sound.playAsync();
+            // Automatically unload short sound after completion
+            sound.setOnPlaybackStatusUpdate((status) => {
+                if (status.isLoaded && status.didJustFinish) {
+                    sound.unloadAsync();
+                }
+            });
         } catch (e) {
             console.log('Sound play error - might be missing file');
         }
@@ -108,9 +151,7 @@ export default function HomeScreen() {
             playSound();
 
             if (notificationsEnabled) {
-                // Cancel existing future notifications
                 await cancelAllNotifications();
-
                 const mapping: Record<string, string> = {
                     hungry: 'notifications.needFood',
                     bored: 'notifications.wantPlay',
@@ -122,18 +163,14 @@ export default function HomeScreen() {
                         t('notifications.happinessTitle'),
                         t('notifications.happinessBody', { name: petData?.name || 'Rosie' })
                     );
-
-                    // Schedule future notification for degradation (30 mins = 1800s)
                     const states: PetState[] = ['hungry', 'bored', 'tired'];
                     const nextState = states[Math.floor(Math.random() * states.length)];
-
                     await scheduleDelayedNotification(
                         petData?.name || 'Rosie',
                         t(mapping[nextState]),
                         1800
                     );
                 } else {
-                    // Send immediate notification for the new state
                     await sendLocalNotification(
                         petData?.name || 'Rosie',
                         t(mapping[newState])
@@ -158,10 +195,7 @@ export default function HomeScreen() {
     return (
         <SafeAreaView className="flex-1 px-6 py-8 bg-[#FFF5F7] font-fredoka">
             <ScrollView>
-
-                {/* Header */}
                 <View className="flex-row justify-between items-center ">
-                    {/* <View className="flex-row justify-between items-center mb-10"> */}
                     <View>
                         <Text className="text-3xl font-fredoka-bold text-[#FF69B4]">{petData.name} ✨</Text>
                         <View className="bg-white px-4 py-1 rounded-full mt-2 self-start shadow-sm flex-row items-center border border-[#FFE0E6]">
@@ -171,24 +205,21 @@ export default function HomeScreen() {
                     </View>
                 </View>
 
-                {/* Developer Controls */}
                 <View className="flex-1 ">
-                    <Text className="text-black text-[10px] text-center mb-2 uppercase tracking-widest opacity-60">{t('home.devControls')}</Text>
+                    <Text className="text-black text-[10px] text-center mb-2 uppercase tracking-widest opacity-60 font-fredoka-bold">{t('home.devControls')}</Text>
                     <View className="flex-row justify-center space-x-6 opacity-30">
                         <TouchableOpacity onPress={() => updatePetState('hungry')} className="mx-2">
-                            <Text className="text-black text-xs underline">Acıkmış (Hungry)</Text>
+                            <Text className="text-black text-xs underline font-fredoka">Acıkmış (Hungry)</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => updatePetState('bored')} className="mx-2">
-                            <Text className="text-black text-xs underline">Sıkılmış (Bored)</Text>
+                            <Text className="text-black text-xs underline font-fredoka">Sıkılmış (Bored)</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => updatePetState('tired')} className="mx-2">
-                            <Text className="text-black text-xs underline">Yorgun (Tired)</Text>
+                            <Text className="text-black text-xs underline font-fredoka">Yorgun (Tired)</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-
-                {/* Character Visual */}
                 <View className="flex-1 justify-center items-center">
                     <View className="relative justify-center items-center">
                         <View className="absolute  w-96 h-96 bg-[#FFD1DC] opacity-30 rounded-full blur-3xl" />
@@ -197,16 +228,13 @@ export default function HomeScreen() {
                             className="w-96 h-96"
                         />
                     </View>
-
-                    {/* Status Message Bubble */}
                     <View className="bg-white/80 p-4 mt-4 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
-                        <Text className="text-[#FF69B4] text-xl font-fredoka-bold text-center italic leading-relaxed">
+                        <Text className="text-[#FF69B4] text-xl font-fredoka-bold text-center leading-relaxed">
                             {t(`home.messages.${petData.state}`)}
                         </Text>
                     </View>
                 </View>
 
-                {/* Interaction Actions */}
                 <View className="flex-row justify-between mt-6 ">
                     <ActionButton
                         label={t('home.actions.feed')}
@@ -233,13 +261,7 @@ export default function HomeScreen() {
                         subLabel={t('home.subactions.restTime')}
                     />
                 </View>
-
-
-
-
-
             </ScrollView>
-
         </SafeAreaView >
     );
 }

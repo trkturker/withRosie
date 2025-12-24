@@ -27,7 +27,7 @@
         "messages": {
             "happy": "Yay! I feel great! 💕",
             "hungry": "Can you hear my tummy rumbling? 🍩",
-            "bored": "Pfff... I'm so bored! 🎨",
+            "bored": "Huh... I'm so bored! 🎨",
             "tired": "Shall we take a little nap? ☁️"
         },
         "actions": {
@@ -51,6 +51,7 @@
         "title": "Settings",
         "notifications": "Notifications",
         "sounds": "App Sounds",
+        "music": "Music",
         "language": "Language",
         "turkish": "Turkish",
         "english": "English",

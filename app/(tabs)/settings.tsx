@@ -13,9 +13,11 @@ export default function SettingsScreen() {
     const {
         notificationsEnabled,
         soundsEnabled,
+        musicEnabled,
         language,
         setNotificationsEnabled,
         setSoundsEnabled,
+        setMusicEnabled,
         setLanguage
     } = useSettings();
     const { t } = useTranslation();
@@ -47,6 +49,13 @@ export default function SettingsScreen() {
                         label={t('settings.sounds')}
                         value={soundsEnabled}
                         onToggle={setSoundsEnabled}
+                    />
+                    <View className="h-[1px] bg-[#FFE0E6] my-4" />
+                    <SettingItem
+                        icon="musical-notes-outline"
+                        label={t('settings.music')}
+                        value={musicEnabled}
+                        onToggle={setMusicEnabled}
                     />
                 </View>
 
