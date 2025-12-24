@@ -14,7 +14,8 @@
         "switchToRegister": "New here? Register now!",
         "switchToLogin": "Already have an account? Log in",
         "madeWith": "Made with 💖 for Kawaii Lovers",
-        "fillAll": "Please fill in all fields."
+        "fillAll": "Please fill in all fields.",
+        "rememberMe": "Remember Me"
     },
     "home": {
         "title": "Virtual Pet",
@@ -62,7 +63,7 @@
     "notifications": {
         "happinessTitle": "Happiness!",
         "happinessBody": "{{name}} is very happy right now! ✨",
-        "missYou": "Your friend missed you 🥺",
+        "missYou": "Your friend needs some rest 🥺",
         "needFood": "Needs to be fed 🍎",
         "wantPlay": "Wants to play together 🎮"
     },

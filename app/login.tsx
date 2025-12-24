@@ -4,6 +4,9 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 import { auth } from '../lib/firebase';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+import { useEffect } from 'react';
 
 export default function LoginScreen() {
     const { t, i18n } = useTranslation();
@@ -11,6 +14,22 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+
+    useEffect(() => {
+        const loadSavedEmail = async () => {
+            try {
+                const savedEmail = await AsyncStorage.getItem('rememberedEmail');
+                if (savedEmail) {
+                    setEmail(savedEmail);
+                    setRememberMe(true);
+                }
+            } catch (e) {
+                console.error('Failed to load remembered email', e);
+            }
+        };
+        loadSavedEmail();
+    }, []);
 
     const handleAuth = async () => {
         if (!email || !password) {
@@ -25,6 +44,13 @@ export default function LoginScreen() {
             } else {
                 await signInWithEmailAndPassword(auth, email, password);
             }
+
+            if (rememberMe) {
+                await AsyncStorage.setItem('rememberedEmail', email);
+            } else {
+                await AsyncStorage.removeItem('rememberedEmail');
+            }
+
             router.replace('/');
         } catch (error: any) {
             Alert.alert(t('common.error'), error.message);
@@ -66,6 +92,22 @@ export default function LoginScreen() {
                                 onChangeText={setPassword}
                             />
                         </View>
+
+                        {!isRegistering && (
+                            <TouchableOpacity
+                                onPress={() => setRememberMe(!rememberMe)}
+                                className="flex-row items-center mt-4 ml-2"
+                            >
+                                <Ionicons
+                                    name={rememberMe ? "checkbox" : "square-outline"}
+                                    size={24}
+                                    color={rememberMe ? "#FF69B4" : "#FFB6C1"}
+                                />
+                                <Text className="ml-2 text-[#FF85A1] font-balsamiq">
+                                    {t('login.rememberMe')}
+                                </Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
 
                     <TouchableOpacity
