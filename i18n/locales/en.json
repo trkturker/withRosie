@@ -27,7 +27,7 @@
         "messages": {
             "happy": "Yay! I feel great! 💕",
             "hungry": "Can you hear my tummy rumbling? 🍩",
-            "bored": "Uuuu... I'm so bored! 🎨",
+            "bored": "Pfff... I'm so bored! 🎨",
             "tired": "Shall we take a little nap? ☁️"
         },
         "actions": {
@@ -60,6 +60,9 @@
     },
     "notifications": {
         "happinessTitle": "Happiness!",
-        "happinessBody": "{{name}} is very happy right now! ✨"
+        "happinessBody": "{{name}} is very happy right now! ✨",
+        "missYou": "Your friend missed you 🥺",
+        "needFood": "Needs to be fed 🍎",
+        "wantPlay": "Wants to play together 🎮"
     }
 }

@@ -64,3 +64,22 @@ export async function sendLocalNotification(title: string, body: string) {
         trigger: null, // send immediately
     });
 }
+
+export async function scheduleDelayedNotification(title: string, body: string, seconds: number) {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title,
+            body,
+            data: { type: 'STATE_TRANSITION' },
+        },
+        trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+            seconds,
+        },
+    });
+}
+
+export async function cancelAllNotifications() {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+}
+

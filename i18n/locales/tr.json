@@ -60,6 +60,9 @@
     },
     "notifications": {
         "happinessTitle": "Mutluluk!",
-        "happinessBody": "{{name}} şu an çok mutlu! ✨"
+        "happinessBody": "{{name}} şu an çok mutlu! ✨",
+        "missYou": "Arkadaşın seni özledi 🥺",
+        "needFood": "Beslenmeye ihtiyacı var 🍎",
+        "wantPlay": "Birlikte oynamak istiyor 🎮"
     }
 }

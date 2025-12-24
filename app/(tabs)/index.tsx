@@ -1,15 +1,14 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { useAuth } from '../../context/AuthContext';
 import { useSettings } from '../../context/SettingsContext';
-import { registerForPushNotificationsAsync, sendLocalNotification } from '../../lib/notifications';
-import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Audio } from 'expo-av';
+import { registerForPushNotificationsAsync, sendLocalNotification, scheduleDelayedNotification, cancelAllNotifications } from '../../lib/notifications';
+import { useTranslation } from 'react-i18next';
+import { Ionicons } from '@expo/vector-icons';
 
 const moodImages: Record<string, any> = {
     happy: require('../../assets/moods/charBase.png'),
@@ -52,7 +51,19 @@ export default function HomeScreen() {
             const docRef = doc(db, 'users', user.uid, 'pet', 'status');
             const unsubscribe = onSnapshot(docRef, (docSnap) => {
                 if (docSnap.exists()) {
-                    setPetData(docSnap.data() as PetData);
+                    const data = docSnap.data() as PetData;
+                    setPetData(data);
+
+                    // Logic for automatic state transition after 30 minutes of being happy
+                    if (data.state === 'happy') {
+                        const timePassed = Date.now() - data.lastInteraction;
+                        const THIRTY_MINUTES = 30 * 60 * 1000;
+                        if (timePassed > THIRTY_MINUTES) {
+                            const possibleStates: PetState[] = ['hungry', 'bored', 'tired'];
+                            const randomState = possibleStates[Math.floor(Math.random() * possibleStates.length)];
+                            updatePetState(randomState);
+                        }
+                    }
                 } else {
                     const initialData: PetData = {
                         name: 'Rosie',
@@ -96,11 +107,38 @@ export default function HomeScreen() {
 
             playSound();
 
-            if (newState === 'happy' && notificationsEnabled) {
-                await sendLocalNotification(
-                    t('notifications.happinessTitle'),
-                    t('notifications.happinessBody', { name: petData?.name || 'Rosie' })
-                );
+            if (notificationsEnabled) {
+                // Cancel existing future notifications
+                await cancelAllNotifications();
+
+                const mapping: Record<string, string> = {
+                    hungry: 'notifications.needFood',
+                    bored: 'notifications.wantPlay',
+                    tired: 'notifications.missYou'
+                };
+
+                if (newState === 'happy') {
+                    await sendLocalNotification(
+                        t('notifications.happinessTitle'),
+                        t('notifications.happinessBody', { name: petData?.name || 'Rosie' })
+                    );
+
+                    // Schedule future notification for degradation (30 mins = 1800s)
+                    const states: PetState[] = ['hungry', 'bored', 'tired'];
+                    const nextState = states[Math.floor(Math.random() * states.length)];
+
+                    await scheduleDelayedNotification(
+                        petData?.name || 'Rosie',
+                        t(mapping[nextState]),
+                        1800
+                    );
+                } else {
+                    // Send immediate notification for the new state
+                    await sendLocalNotification(
+                        petData?.name || 'Rosie',
+                        t(mapping[newState])
+                    );
+                }
             }
         } catch (error) {
             console.error("Error updating pet state:", error);
