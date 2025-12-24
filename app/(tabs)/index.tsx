@@ -195,15 +195,15 @@ export default function HomeScreen() {
     if (!user || !petData) return null;
 
     return (
-        <SafeAreaView className="flex-1 px-6 py-8 bg-[#FFF5F7] font-fredoka">
+        <SafeAreaView className="flex-1 px-6 py-8 bg-[#FFF5F7]">
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Header */}
                 <View className="flex-row justify-between items-center mb-6">
                     <View>
-                        <Text className="text-3xl font-fredoka-bold text-[#FF69B4]">{petData.name} ✨</Text>
+                        <Text className="text-3xl font-balsamiq-bold text-[#FF69B4]">{petData.name} ✨</Text>
                         <View className="bg-white px-4 py-1 rounded-full mt-2 self-start shadow-sm flex-row items-center border border-[#FFE0E6]">
                             <View className={`w-2 h-2 rounded-full mr-2 ${petData.state === 'happy' ? 'bg-green-400' : 'bg-pink-400 animate-pulse'}`} />
-                            <Text className="text-[#FF85A1] font-fredoka-medium capitalize">{t(`home.status.${petData.state}`)}</Text>
+                            <Text className="text-[#FF85A1] font-balsamiq capitalize">{t(`home.status.${petData.state}`)}</Text>
                         </View>
                     </View>
 
@@ -228,7 +228,7 @@ export default function HomeScreen() {
 
                     {/* Status Message Bubble */}
                     <View className="bg-white/80 p-5 mt-6 rounded-[35px] border-2 border-[#FFE0E6] items-center shadow-sm w-full">
-                        <Text className="text-[#FF69B4] text-xl font-fredoka-bold text-center leading-relaxed">
+                        <Text className="text-[#FF69B4] text-xl font-balsamiq-bold text-center leading-relaxed">
                             {t(`home.messages.${petData.state}`)}
                         </Text>
                     </View>

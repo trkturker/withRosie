@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ActivityIndicator, Alert } from 'react-native';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -8,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 export default function LoginScreen() {
     const { t, i18n } = useTranslation();
-    const [email, setEmail] = useState('tturk753@gmail.com');
-    const [password, setPassword] = useState('123456');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
 
@@ -41,16 +40,16 @@ export default function LoginScreen() {
         >
             <View className="flex-1 justify-center items-center px-8">
                 <View className="bg-white p-8 rounded-[40px] w-full shadow-2xl border-4 border-[#FFD1DC]">
-                    <Text className={`${i18n.language === 'tr' ? 'text-2xl' : 'text-3xl'} font-fredoka-bold text-[#FF69B4] mb-8 text-center`}>
+                    <Text className={`${i18n.language === 'tr' ? 'text-2xl' : 'text-3xl'} font-balsamiq-bold text-[#FF69B4] mb-8 text-center`}>
                         {isRegistering ? t('login.registerTitle') : t('login.title')}
                     </Text>
 
                     <View className="space-y-4">
                         <View>
-                            <Text className="text-[#FF85A1] font-fredoka-semibold mb-2 ml-2">{t('login.email')}</Text>
+                            <Text className="text-[#FF85A1] font-balsamiq-bold mb-2 ml-2">{t('login.email')}</Text>
                             <TextInput
                                 placeholder="hello@kawaii.com"
-                                className="bg-[#FFF0F3] p-4 rounded-3xl border-2 border-[#FFE0E6] text-gray-800 font-fredoka"
+                                className="bg-[#FFF0F3] p-4 rounded-3xl border-2 border-[#FFE0E6] text-gray-800 font-balsamiq"
                                 value={email}
                                 onChangeText={setEmail}
                                 autoCapitalize="none"
@@ -58,11 +57,11 @@ export default function LoginScreen() {
                         </View>
 
                         <View className="mt-4">
-                            <Text className="text-[#FF85A1] font-fredoka-semibold mb-2 ml-2">{t('login.password')}</Text>
+                            <Text className="text-[#FF85A1] font-balsamiq-bold mb-2 ml-2">{t('login.password')}</Text>
                             <TextInput
                                 placeholder="••••••••"
                                 secureTextEntry
-                                className="bg-[#FFF0F3] p-4 rounded-3xl border-2 border-[#FFE0E6] text-gray-800 font-fredoka"
+                                className="bg-[#FFF0F3] p-4 rounded-3xl border-2 border-[#FFE0E6] text-gray-800 font-balsamiq"
                                 value={password}
                                 onChangeText={setPassword}
                             />
@@ -77,7 +76,7 @@ export default function LoginScreen() {
                         {loading ? (
                             <ActivityIndicator color="white" />
                         ) : (
-                            <Text className="text-white text-center font-fredoka-bold text-xl uppercase tracking-widest">
+                            <Text className="text-white text-center font-balsamiq-bold text-xl uppercase tracking-widest">
                                 {isRegistering ? t('login.registerButton') : t('login.loginButton')}
                             </Text>
                         )}
@@ -87,13 +86,13 @@ export default function LoginScreen() {
                         onPress={() => setIsRegistering(!isRegistering)}
                         className="mt-6"
                     >
-                        <Text className="text-[#FF85A1] text-center font-fredoka-semibold">
+                        <Text className="text-[#FF85A1] text-center font-balsamiq-bold">
                             {isRegistering ? t('login.switchToLogin') : t('login.switchToRegister')}
                         </Text>
                     </TouchableOpacity>
                 </View>
 
-                <Text className="absolute bottom-10 text-[#FFB6C1] font-fredoka-medium">
+                <Text className="absolute bottom-10 text-[#FFB6C1] font-balsamiq">
                     {t('login.madeWith')}
                 </Text>
             </View>

@@ -27,7 +27,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ label, icon, color, 
         >
             <Ionicons name={icon} size={34} color="white" />
         </TouchableOpacity>
-        <Text className="mt-3 font-fredoka-bold text-[#FF69B4] text-[15px] text-center">{label}</Text>
-        <Text className="text-[#FFB6C1] text-[11px] font-fredoka-medium tracking-tight text-center">{subLabel}</Text>
+        <Text className="mt-3 font-balsamiq-bold text-[#FF69B4] text-[15px] text-center">{label}</Text>
+        <Text className="text-[#FFB6C1] text-[11px] font-balsamiq tracking-tight text-center">{subLabel}</Text>
     </View>
 );

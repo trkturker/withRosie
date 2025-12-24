@@ -38,13 +38,13 @@ export const DeveloperMenu: React.FC<DeveloperMenuProps> = ({ visible, onClose, 
                     onPress={(e) => e.stopPropagation()}
                 >
                     <View className="flex-row justify-between items-center mb-6">
-                        <Text className="text-2xl font-fredoka-bold text-[#FF69B4]">{t('devMenu.title')}</Text>
+                        <Text className="text-2xl font-balsamiq-bold text-[#FF69B4]">{t('devMenu.title')}</Text>
                         <TouchableOpacity onPress={onClose}>
                             <Ionicons name="close-circle" size={32} color="#FFB6C1" />
                         </TouchableOpacity>
                     </View>
 
-                    <Text className="text-[#FF85A1] font-fredoka-medium mb-6 text-center">
+                    <Text className="text-[#FF85A1] font-balsamiq mb-6 text-center">
                         {t('devMenu.description')}
                     </Text>
 
@@ -61,7 +61,7 @@ export const DeveloperMenu: React.FC<DeveloperMenuProps> = ({ visible, onClose, 
                                 <View style={{ backgroundColor: option.color }} className="w-12 h-12 rounded-2xl items-center justify-center mb-2">
                                     <Ionicons name={option.icon} size={24} color="white" />
                                 </View>
-                                <Text className="font-fredoka-bold text-[#FF85A1]">{t(option.labelKey)}</Text>
+                                <Text className="font-balsamiq-bold text-[#FF85A1]">{t(option.labelKey)}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -70,7 +70,7 @@ export const DeveloperMenu: React.FC<DeveloperMenuProps> = ({ visible, onClose, 
                         onPress={onClose}
                         className="bg-[#FFD1DC] p-4 rounded-2xl mt-4 items-center"
                     >
-                        <Text className="font-fredoka-bold text-[#FF69B4]">{t('devMenu.close')}</Text>
+                        <Text className="font-balsamiq-bold text-[#FF69B4]">{t('devMenu.close')}</Text>
                     </TouchableOpacity>
                 </Pressable>
             </Pressable>

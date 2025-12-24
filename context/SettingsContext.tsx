@@ -19,7 +19,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [notificationsEnabled, setNotificationsEnabledState] = useState(true);
     const [soundsEnabled, setSoundsEnabledState] = useState(true);
     const [musicEnabled, setMusicEnabledState] = useState(true);
-    const [language, setLanguageState] = useState(i18n.language || 'tr');
+    const [language, setLanguageState] = useState(i18n.language || 'en');
 
     useEffect(() => {
         // Load saved settings

@@ -1,6 +1,8 @@
+import React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
     const { t } = useTranslation();
@@ -8,40 +10,44 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: '#FF69B4',
-                tabBarInactiveTintColor: '#FFB6C1',
+                headerShown: false,
                 tabBarStyle: {
                     position: 'absolute',
                     bottom: 25,
                     left: 20,
                     right: 20,
+                    backgroundColor: 'white',
                     borderRadius: 35,
+                    borderTopWidth: 2,
                     height: 75,
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    borderTopWidth: 0,
-                    paddingBottom: 12,
-                    margin: 12,
+                    paddingBottom: Platform.OS === 'ios' ? 25 : 15,
                     paddingTop: 12,
-                    shadowColor: '#FF69B4',
-                    shadowOffset: { width: 0, height: 12 },
-                    shadowOpacity: 0.15,
-                    shadowRadius: 24,
-                    elevation: 12,
+                    shadowColor: '#FFB6C1',
+                    marginRight: 20,
+                    marginLeft: 20,
+                    elevation: 4,
+                    marginBottom: 15,
+                    borderWidth: 2,
+                    borderColor: '#FFE0E6',
                 },
+                tabBarActiveTintColor: '#FF69B4',
+                tabBarInactiveTintColor: '#FFB6C1',
                 tabBarLabelStyle: {
-                    fontFamily: 'Fredoka_700Bold',
+                    fontFamily: 'Balsamiq-Bold',
                     fontSize: 11,
-                    marginTop: 2,
+                    marginBottom: 5,
                 },
-                headerShown: false,
+                tabBarIconStyle: {
+                    marginBottom: 0,
+                }
             }}
         >
             <Tabs.Screen
                 name="characters"
                 options={{
                     title: t('tabs.characters'),
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="people-outline" size={size} color={color} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <Ionicons name={focused ? "people" : "people-outline"} size={26} color={color} />
                     ),
                 }}
             />
@@ -49,8 +55,8 @@ export default function TabLayout() {
                 name="index"
                 options={{
                     title: t('tabs.home'),
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home-outline" size={size} color={color} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <Ionicons name={focused ? "home" : "home-outline"} size={26} color={color} />
                     ),
                 }}
             />
@@ -58,8 +64,8 @@ export default function TabLayout() {
                 name="settings"
                 options={{
                     title: t('tabs.settings'),
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="settings-outline" size={size} color={color} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <Ionicons name={focused ? "settings" : "settings-outline"} size={26} color={color} />
                     ),
                 }}
             />
